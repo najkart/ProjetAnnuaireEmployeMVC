@@ -129,7 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\EmployesGeneratedController.cs" />
+    <Compile Include="Controllers\EmployesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataAccesslayer\AnnuaireEmployeContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -345,15 +345,14 @@
     <Content Include="stylesheets\bootstrap\mixins\_border-radius.scss" />
     <Content Include="stylesheets\bootstrap\mixins\_background-variant.scss" />
     <Content Include="stylesheets\bootstrap\mixins\_alerts.scss" />
-    <Content Include="Views\EmployesGenerated\Create.cshtml" />
-    <Content Include="Views\EmployesGenerated\Delete.cshtml" />
-    <Content Include="Views\EmployesGenerated\Details.cshtml" />
-    <Content Include="Views\EmployesGenerated\Edit.cshtml" />
-    <Content Include="Views\EmployesGenerated\Index.cshtml" />
+    <Content Include="Views\Employes\Create.cshtml" />
+    <Content Include="Views\Employes\Delete.cshtml" />
+    <Content Include="Views\Employes\Details.cshtml" />
+    <Content Include="Views\Employes\Edit.cshtml" />
+    <Content Include="Views\Employes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Employe\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

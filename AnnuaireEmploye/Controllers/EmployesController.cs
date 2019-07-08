@@ -12,7 +12,7 @@ using AnnuaireEmploye.Services;
 
 namespace AnnuaireEmploye.Controllers
 {
-    public class EmployesGeneratedController : Controller
+    public class EmployesController : Controller
     {
         private AnnuaireEmployeContext db = new AnnuaireEmployeContext();
 
