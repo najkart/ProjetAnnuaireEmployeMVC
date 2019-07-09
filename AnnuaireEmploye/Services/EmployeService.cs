@@ -1,4 +1,5 @@
 ﻿using AnnuaireEmploye.DataAccesslayer;
+using AnnuaireEmploye.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,13 @@ namespace AnnuaireEmploye.Services
 {
     public class EmployeService
     {
-        
-      
+
+        EmployeRepository employeRepository = new EmployeRepository();
 
         public bool IsUnique(string matricule)
         {
-             AnnuaireEmployeContext db = new AnnuaireEmployeContext();
-            bool isUnique = true;
-            if (db.Employe.Any(e => e.Matricule == matricule))
-                {
-                isUnique = false;
-            }
+
+            bool isUnique = !employeRepository.GetAnyEmployeByMatricule(matricule);
 
             return isUnique;
 

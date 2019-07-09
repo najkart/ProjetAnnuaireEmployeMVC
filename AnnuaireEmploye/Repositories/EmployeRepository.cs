@@ -38,6 +38,11 @@ namespace AnnuaireEmploye.Models
             db.SaveChanges();
         }
 
+        public bool GetAnyEmployeByMatricule(String matricule)
+        {
+
+            return db.Employe.Any(e => e.Matricule == matricule);
+        }
 
     }
 }

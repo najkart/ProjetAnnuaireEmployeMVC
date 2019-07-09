@@ -21,6 +21,9 @@ namespace AnnuaireEmploye.Controllers
         {
             var employeRepository = new EmployeRepository();
             var employes = employeRepository.GetEmployes();
+            ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
+
             return View(employes);
         }
 
