@@ -13,12 +13,15 @@ namespace AnnuaireEmploye.Services
 
         EmployeRepository employeRepository = new EmployeRepository();
 
-        public bool IsUnique(string matricule)
+        public bool Exist(string matricule)
         {
+            bool exist = false;
 
-            bool isUnique = !employeRepository.GetAnyEmployeByMatricule(matricule);
+            if (employeRepository.GetEmployeByMatricule(matricule) != null)
+            { exist = true; }
+      
 
-            return isUnique;
+            return exist;
 
         }
     }

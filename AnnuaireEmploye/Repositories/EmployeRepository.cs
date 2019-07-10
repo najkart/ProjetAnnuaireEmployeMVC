@@ -9,11 +9,13 @@ namespace AnnuaireEmploye.Models
     public class EmployeRepository
     {
         private AnnuaireEmployeContext db = new AnnuaireEmployeContext();
-        public IEnumerable<Employe> GetEmployes()
+        public List<Employe> GetEmployes()
         {
             var employes = db.Employe.Include(e => e.Departement).Include(e => e.Poste);
-            return (employes);
+            return (employes.ToList());
         }
+
+
 
         public Employe GetEmployeById(int? id)
         {
@@ -38,10 +40,10 @@ namespace AnnuaireEmploye.Models
             db.SaveChanges();
         }
 
-        public bool GetAnyEmployeByMatricule(String matricule)
+        public Employe GetEmployeByMatricule(String matricule)
         {
 
-            return db.Employe.Any(e => e.Matricule == matricule);
+            return db.Employe.FirstOrDefault(e => e.Matricule == matricule);
         }
 
     }

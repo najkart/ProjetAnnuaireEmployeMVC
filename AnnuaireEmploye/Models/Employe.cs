@@ -37,7 +37,7 @@ namespace AnnuaireEmploye.Models
                    ErrorMessage = "Entered phone format is not valid.")]
         public string Telephone { get; set; }
 
-
+        [Display(Name ="Villlllle")]
         public string Ville { get; set; }
 
         public virtual Departement Departement { get; set; }

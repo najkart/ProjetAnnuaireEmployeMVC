@@ -1,14 +1,12 @@
-﻿using System;
+﻿using AnnuaireEmploye.DataAccesslayer;
+using AnnuaireEmploye.Models;
+using AnnuaireEmploye.Models.ViewModels;
+using AnnuaireEmploye.Services;
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AnnuaireEmploye.DataAccesslayer;
-using AnnuaireEmploye.Models;
-using AnnuaireEmploye.Services;
 
 namespace AnnuaireEmploye.Controllers
 {
@@ -19,12 +17,49 @@ namespace AnnuaireEmploye.Controllers
         // GET: EmployesGenerated
         public ActionResult Index()
         {
+
+            var vm = new CreateViewModel();
+
             var employeRepository = new EmployeRepository();
             var employes = employeRepository.GetEmployes();
             ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
             ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
 
-            return View(employes);
+            vm.Employes = employes;
+
+            vm.Actif = true;
+
+
+            return View(vm);
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult Index([Bind(Include = "Matricule,Name,IdPoste,IdDepartement,date,Actif")]SearchViewModel searchVM)
+        {
+            var employeRepository = new EmployeRepository();
+            // var employe = employeRepository.GetEmployeByMatricule(searchVM.SearchMatricule);
+
+            var employees = employeRepository.GetEmployes();
+
+            searchVM.Name = searchVM.Name == null ? "" : searchVM.Name;
+            searchVM.Matricule = searchVM.Matricule == null ? "" : searchVM.Matricule;
+
+
+            var employeesfilter = employees.Where(x => x.Matricule.ToUpper().Contains(searchVM.Matricule.ToUpper()) && x.NomComplet.ToUpper().Contains(searchVM.Name.ToUpper())).ToList();
+
+
+            // List<Employe> employes = new List<Employe>();
+            // if (!String.IsNullOrEmpty(SearchMatricule)) {
+            //     if (employe!=null) {
+            //         employes.Add(employe);
+            //     }
+            //      //exeception employe null non gérée
+            // }
+            //else
+            // {
+            //     employes= employeRepository.GetEmployes();
+            // }
+            return View(employeesfilter);
         }
 
         // GET: EmployesGenerated/Details/5
@@ -38,7 +73,7 @@ namespace AnnuaireEmploye.Controllers
             {
 
             }
-            var employeRepository= new EmployeRepository();
+            var employeRepository = new EmployeRepository();
             Employe employe = employeRepository.GetEmployeById(id);
             if (employe == null)
             {
@@ -62,12 +97,12 @@ namespace AnnuaireEmploye.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdEmploye,Matricule,NomComplet,DateEmbauche,IdPoste,IdDepartement,Actif,Ville,Email,Telephone")] Employe employe)
         {
-            
+
             if (ModelState.IsValid)
             {
-               
+
                 var employeService = new EmployeService();
-                if (employeService.IsUnique(employe.Matricule))
+                if (!employeService.Exist(employe.Matricule))
                 {
                     var employeRepository = new EmployeRepository();
                     employeRepository.AddEmploye(employe);
@@ -79,7 +114,7 @@ namespace AnnuaireEmploye.Controllers
                 {
                     ModelState.AddModelError("Matricule", "Ce matricule existe déjà");
                 }
-             
+
             }
 
             ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement", employe.IdDepartement);

@@ -162,6 +162,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Departement.cs" />
     <Compile Include="Models\Employe.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreateViewModel.cs" />
     <Compile Include="Repositories\EmployeRepository.cs" />
     <Compile Include="Models\Poste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
