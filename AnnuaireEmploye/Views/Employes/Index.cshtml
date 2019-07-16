@@ -1,4 +1,4 @@
-﻿@model AnnuaireEmploye.Models.ViewModels.CreateViewModel
+﻿@model AnnuaireEmploye.Models.ViewModels.SearchViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -32,7 +32,7 @@
             <label>Poste:</label>
         </div>
         <div class="col-md-4">
-            @Html.DropDownList("IdPoste", null, "", htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("IdPoste", (SelectList)ViewBag.IdPoste , htmlAttributes: new { @class = "form-control" });
         </div>
     </div>
     <div class="row col-md-4">
@@ -40,7 +40,7 @@
             <label>Departement:</label>
         </div>
         <div class="col-md-4">
-            @Html.DropDownList("IdDepartement", null, "", htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("IdDepartement", (SelectList)ViewBag.IdDepartement, htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
     <div class="row col-md-4">
@@ -48,7 +48,7 @@
             <label>Date d'embauche:</label>
         </div>
         <div class="col-md-4">
-            @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DateEmbauche, new { htmlAttributes = new { @class = "form-control" } })
 
         </div>
     </div>
@@ -98,33 +98,33 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.NomComplet)
+            @Html.DisplayNameFor(model => model.Employe.NomComplet)
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Matricule)
+            @Html.DisplayNameFor(model => model.Employe.Matricule)
 
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Poste.NomPoste)
+            @Html.DisplayNameFor(model => model.Employe.Poste.NomPoste)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Departement.NomDepartement)
+            @Html.DisplayNameFor(model => model.Employe.Departement.NomDepartement)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.DateEmbauche)
+            @Html.DisplayNameFor(model => model.Employe.DateEmbauche)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Actif)
+            @Html.DisplayNameFor(model => model.Employe.Actif)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Ville)
+            @Html.DisplayNameFor(model => model.Employe.Ville)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Email)
+            @Html.DisplayNameFor(model => model.Employe.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BindingLabel.Telephone)
+            @Html.DisplayNameFor(model => model.Employe.Telephone)
         </th>
         <th></th>
     </tr>

@@ -18,35 +18,36 @@ namespace AnnuaireEmploye.Controllers
         public ActionResult Index()
         {
 
-            var vm = new CreateViewModel();
+            var searchVM = new SearchViewModel();
 
             var employeRepository = new EmployeRepository();
-            var employes = employeRepository.GetEmployes();
-            ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            searchVM.Employes = employeRepository.GetEmployes();
+            ViewBag.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
             ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
 
-            vm.Employes = employes;
-
-            vm.Actif = true;
 
 
-            return View(vm);
+            searchVM.Actif = true;
+
+
+            return View(searchVM);
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "Matricule,Name,IdPoste,IdDepartement,date,Actif")]SearchViewModel searchVM)
+        [HttpPost]
+        public ActionResult Index(SearchViewModel searchVM)
         {
             var employeRepository = new EmployeRepository();
             // var employe = employeRepository.GetEmployeByMatricule(searchVM.SearchMatricule);
 
-            var employees = employeRepository.GetEmployes();
+            var employes = employeRepository.GetEmployes();
 
-            searchVM.Name = searchVM.Name == null ? "" : searchVM.Name;
+            searchVM.NomComplet = searchVM.NomComplet == null ? "" : searchVM.NomComplet;
             searchVM.Matricule = searchVM.Matricule == null ? "" : searchVM.Matricule;
 
 
-            var employeesfilter = employees.Where(x => x.Matricule.ToUpper().Contains(searchVM.Matricule.ToUpper()) && x.NomComplet.ToUpper().Contains(searchVM.Name.ToUpper())).ToList();
-
+            searchVM.Employes = employes.Where(x => x.Matricule.ToUpper().Contains(searchVM.Matricule.ToUpper()) && x.NomComplet.ToUpper().Contains(searchVM.NomComplet.ToUpper())).ToList();
+            ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
 
             // List<Employe> employes = new List<Employe>();
             // if (!String.IsNullOrEmpty(SearchMatricule)) {
@@ -59,7 +60,7 @@ namespace AnnuaireEmploye.Controllers
             // {
             //     employes= employeRepository.GetEmployes();
             // }
-            return View(employeesfilter);
+            return View(searchVM);
         }
 
         // GET: EmployesGenerated/Details/5
@@ -193,5 +194,37 @@ namespace AnnuaireEmploye.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult Recherche()
+        {
+
+            var RechercheVM = new RechercheViewModel();
+
+            var employeRepository = new EmployeRepository();
+            RechercheVM.Employes = employeRepository.GetEmployes();
+            RechercheVM.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            RechercheVM.Postes = new SelectList(db.Poste, "IdPoste", "NomPoste");
+
+            return View(RechercheVM);
+        }
+
+        [HttpPost]
+        public ActionResult Recherche(RechercheViewModel RechercheVM)
+        {
+            var employeRepository = new EmployeRepository();
+            RechercheVM.NomComplet = RechercheVM.NomComplet??"";
+            RechercheVM.Matricule = RechercheVM.Matricule ?? "";
+
+            RechercheVM.Employes = employeRepository.GetEmployeByCritere(RechercheVM.Matricule, RechercheVM.NomComplet, RechercheVM.IdPoste, RechercheVM.IdDepartement);
+
+            RechercheVM.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            RechercheVM.Postes = new SelectList(db.Poste, "IdPoste", "NomPoste");
+
+
+            return View(RechercheVM);
+        }
+
+
     }
 }

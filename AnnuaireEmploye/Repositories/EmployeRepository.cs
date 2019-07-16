@@ -46,5 +46,13 @@ namespace AnnuaireEmploye.Models
             return db.Employe.FirstOrDefault(e => e.Matricule == matricule);
         }
 
+
+        public IList<Employe> GetEmployeByCritere(String matricule,string NomComplet, int IdPoste , int IdDepartement)
+        {
+
+            return db.Employe.Where(emp => emp.Matricule.Contains(matricule) && emp.NomComplet.Contains(NomComplet)
+            && emp.IdPoste == IdPoste && emp.IdDepartement == IdDepartement).ToList();
+        }
+
     }
 }
