@@ -22,8 +22,8 @@ namespace AnnuaireEmploye.Controllers
 
             var employeRepository = new EmployeRepository();
             searchVM.Employes = employeRepository.GetEmployes();
-            ViewBag.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
-            ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
+            searchVM.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            searchVM.Postes = new SelectList(db.Poste, "IdPoste", "NomPoste");
 
 
 
@@ -37,30 +37,16 @@ namespace AnnuaireEmploye.Controllers
         public ActionResult Index(SearchViewModel searchVM)
         {
             var employeRepository = new EmployeRepository();
-            // var employe = employeRepository.GetEmployeByMatricule(searchVM.SearchMatricule);
-
-            var employes = employeRepository.GetEmployes();
-
+      
             searchVM.NomComplet = searchVM.NomComplet == null ? "" : searchVM.NomComplet;
             searchVM.Matricule = searchVM.Matricule == null ? "" : searchVM.Matricule;
 
 
-            searchVM.Employes = employes.Where(x => x.Matricule.ToUpper().Contains(searchVM.Matricule.ToUpper()) && x.NomComplet.ToUpper().Contains(searchVM.NomComplet.ToUpper())).ToList();
-            ViewBag.IdDepartement = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
-            ViewBag.IdPoste = new SelectList(db.Poste, "IdPoste", "NomPoste");
+            searchVM.Employes = employeRepository.GetEmployeByCritere(searchVM.Matricule, searchVM.NomComplet, searchVM.IdPoste, searchVM.IdDepartement, searchVM.DateEmbauche, searchVM.Actif);
+            searchVM.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
+            searchVM.Postes = new SelectList(db.Poste, "IdPoste", "NomPoste");
 
-            // List<Employe> employes = new List<Employe>();
-            // if (!String.IsNullOrEmpty(SearchMatricule)) {
-            //     if (employe!=null) {
-            //         employes.Add(employe);
-            //     }
-            //      //exeception employe null non gérée
-            // }
-            //else
-            // {
-            //     employes= employeRepository.GetEmployes();
-            // }
-            return View(searchVM);
+                   return View(searchVM);
         }
 
         // GET: EmployesGenerated/Details/5
@@ -216,7 +202,7 @@ namespace AnnuaireEmploye.Controllers
             RechercheVM.NomComplet = RechercheVM.NomComplet??"";
             RechercheVM.Matricule = RechercheVM.Matricule ?? "";
 
-            RechercheVM.Employes = employeRepository.GetEmployeByCritere(RechercheVM.Matricule, RechercheVM.NomComplet, RechercheVM.IdPoste, RechercheVM.IdDepartement);
+            //RechercheVM.Employes = employeRepository.GetEmployeByCritere(RechercheVM.Matricule, RechercheVM.NomComplet, RechercheVM.IdPoste, RechercheVM.IdDepartement);
 
             RechercheVM.Departements = new SelectList(db.Departement, "IdDepartement", "NomDepartement");
             RechercheVM.Postes = new SelectList(db.Poste, "IdPoste", "NomPoste");

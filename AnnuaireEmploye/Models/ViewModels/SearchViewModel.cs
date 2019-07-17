@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace AnnuaireEmploye.Models.ViewModels
 {
@@ -17,7 +18,7 @@ namespace AnnuaireEmploye.Models.ViewModels
         public DateTime DateEmbauche { get; set; }
       
         public int IdPoste { get; set; }
-    
+
         public int IdDepartement { get; set; }
         public bool Actif { get; set; }
 
@@ -29,9 +30,15 @@ namespace AnnuaireEmploye.Models.ViewModels
 
         public string Ville { get; set; }
         public Employe Employe { get; set; }
-        public IEnumerable<Employe> Employes { get; set; }
-        public IEnumerable<Poste> Postes { get; set; }
-        public IEnumerable<Departement> Departements { get; set; }
+        public List<Employe> Employes { get; set; }
+        public SelectList Postes { get; set; }
+        public SelectList Departements { get; set; }
+
+
+        public SearchViewModel()
+        {
+            Employes = new List<Employe>();
+        }
 
     }
 }

@@ -11,6 +11,7 @@ namespace AnnuaireEmploye.Models
         private AnnuaireEmployeContext db = new AnnuaireEmployeContext();
         public List<Employe> GetEmployes()
         {
+
             var employes = db.Employe.Include(e => e.Departement).Include(e => e.Poste);
             return (employes.ToList());
         }
@@ -47,11 +48,13 @@ namespace AnnuaireEmploye.Models
         }
 
 
-        public IList<Employe> GetEmployeByCritere(String matricule,string NomComplet, int IdPoste , int IdDepartement)
+        public List<Employe> GetEmployeByCritere(String matricule,string nomComplet, int idPoste , int idDepartement, DateTime dateEmbauche , bool actif)
         {
 
-            return db.Employe.Where(emp => emp.Matricule.Contains(matricule) && emp.NomComplet.Contains(NomComplet)
-            && emp.IdPoste == IdPoste && emp.IdDepartement == IdDepartement).ToList();
+            return db.Employe.Where(emp => emp.Matricule.ToUpper().Contains(matricule.ToUpper())
+            || emp.NomComplet.ToUpper().Contains(nomComplet.ToUpper())
+            || emp.IdPoste ==idPoste || emp.IdDepartement == idDepartement
+            || emp.DateEmbauche == dateEmbauche || emp.Actif==actif).ToList();
         }
 
     }

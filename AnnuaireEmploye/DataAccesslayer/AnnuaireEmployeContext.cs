@@ -16,6 +16,9 @@ namespace AnnuaireEmploye.DataAccesslayer
 
  
         public AnnuaireEmployeContext(): base("AnnuaireEmployeContext") // the name of the connection string is passed to the constructor 
-        { }
+        {
+
+
+        }
     }
 }

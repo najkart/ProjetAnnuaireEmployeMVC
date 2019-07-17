@@ -24,32 +24,35 @@
             <label>Nom:</label>
         </div>
         <div class="col-md-4">
-            @Html.TextBox("Name", null, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBox("NomComplet", null, htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
+
     <div class="row col-md-4">
+        @Html.LabelFor(model => model.IdPoste, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-4">
-            <label>Poste:</label>
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownList("IdPoste", (SelectList)ViewBag.IdPoste , htmlAttributes: new { @class = "form-control" });
+
+            @Html.DropDownListFor(model => model.IdPoste, Model.Postes,"Please select", new { @class = "form-control" })
+       
         </div>
     </div>
+
     <div class="row col-md-4">
+        @Html.LabelFor(model => model.IdDepartement, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-4">
-            <label>Departement:</label>
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownList("IdDepartement", (SelectList)ViewBag.IdDepartement, htmlAttributes: new { @class = "form-control" })
+
+            @Html.DropDownListFor(model => model.IdDepartement, Model.Departements, "Please select",new { @class = "form-control" })
+          
         </div>
     </div>
+
     <div class="row col-md-4">
         <div class="col-md-4">
             <label>Date d'embauche:</label>
         </div>
         <div class="col-md-4">
             @Html.EditorFor(model => model.DateEmbauche, new { htmlAttributes = new { @class = "form-control" } })
-
+          
         </div>
     </div>
     <div class="row col-md-4">
@@ -57,31 +60,10 @@
             <label>Actif:</label>
         </div>
         <div class="col-md-4 checkbox">
-            @*@Html.TextBox("Actif", null, htmlAttributes: new { @class = "form-control" })*@
             @Html.EditorFor(model => model.Actif)
         </div>
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Actif, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Actif)
-                @Html.ValidationMessageFor(model => model.Actif, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>*@
-
-
-    @*<div class="row col-md-4">
-        <div class="col-md-4">
-            <label>Poste: </label>
-        </div>
-        <div class="col-md-8">
-            @Html.DropDownList("IdPoste", null, htmlAttributes: new { @class = "form-control" })
-            </div>
-
-        </div>*@
 
     <div class="col-md-4">
         <input class="btn btn-primary" type="submit" value="Filter" /><br /> <br />
